@@ -31,7 +31,7 @@
     </button>
 
 </nav>
-<button onclick="findAllBlog()">Show All</button>
+<button onclick="findAll()">Show All</button>
 <div id="display">
 
 </div>
@@ -50,7 +50,7 @@
                     '        <td>Avatar</td>\n' +
                     '        <td>Roles</td>\n' +
                     '        <td>DELETE</td>\n' +
-                    '        <td>EDIT</td>\n' +
+                    // '        <td>EDIT</td>\n' +
                     '    </tr>';
                 for (let i = 0; i < user.length; i++) {
                     content += `<tr>
@@ -60,7 +60,7 @@
                                     <td><img class = "show_image" src= "${user[i].avatar}"></td>
                                     <td>${JSON.stringify(user[i].roles[0].name)}</td>
                                     <td><button onclick="deleteUser(${user[i].id})">Delete</button></td>
-                                    <td><button onclick="showEditForm(${user[i].id})">Edit</button></td>
+<!--                                    <td><button onclick="showEditForm(${user[i].id})">Edit</button></td>-->
                                     </tr>`;
                 }
                 content+='</table>';
@@ -70,21 +70,26 @@
     }
 
     function deleteUser(id) {
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            type: "DELETE",
-            url: "http://localhost:8080/users/" + id,
-            success: function () {
-                findAll()
+        let roles=window.sessionStorage.getItem('ROLE_KEY');
+        if (roles=='[{"authority":"ADMIN"}]') {
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                type: "DELETE",
+                url: "http://localhost:8080/users/" + id,
+                success: function () {
+                    findAll()
+                    pageUser()
 
-            },
-            error: function (error) {
-                console.log(error)
-            }
-        })
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        }
+
     }
 
     $(document).ready(function () {
@@ -122,7 +127,6 @@
                         '        <td>Avatar</td>\n' +
                         '        <td>Roles</td>\n' +
                         '        <td>DELETE</td>\n' +
-                        '        <td>EDIT</td>\n' +
                         '    </tr>';
                     let pageStart = (pagination.pageNumber - 1) * pagination.pageSize;
                     let pageEnd = pageStart + pagination.pageSize;
@@ -136,7 +140,6 @@
                                     <td><img class = "show_image" src= "${user.avatar}"></td>
                                     <td>${JSON.stringify(user.roles[0].name)}</td>
                                     <td><button onclick="deleteUser(${user.id})">Delete</button></td>
-                                    <td><button onclick="showEditForm(${user.id})">Edit</button></td>
                                     </tr>`;
 
                     })

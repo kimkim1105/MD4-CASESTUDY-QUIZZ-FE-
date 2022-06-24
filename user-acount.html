@@ -24,6 +24,7 @@
     <a class="navbar-brand" href="/index.html">Home</a>
     <div class="col-sm-11" style="text-align: right">
         <button type="button" class="btn btn-danger" onclick="logOut()">LOG OUT</button>
+        <button type="button" class="btn btn-danger" onclick="changePasswordForm()">Change Password</button>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -31,6 +32,12 @@
 
 </nav>
 <script>
+
+
+    function changePasswordForm(){
+    window.location.href='change-password.html';
+    }
+
     function logOut(){
         window.sessionStorage.clear();
         window.location.href = 'index.html'
