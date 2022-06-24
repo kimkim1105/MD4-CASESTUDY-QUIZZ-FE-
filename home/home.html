@@ -340,12 +340,14 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                    <a id="user" href="../user/user-acount.html" >User account</a>
+                    <a id="user1" href="../user/adminmanager.html" >User account:</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="Login_form.html">Login</a>
+                    <a id="login" class="nav-link" href="../user/login.html">Login</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="Register_form.html">Register</a>
+                    <a id="register" class="nav-link" href="../user/register.html">Register</a>
                 </li>
             </ul>
         </div>
@@ -507,6 +509,31 @@
     </div>
 </div>
 </body>
+<script>
+    console.log('token-->',window.sessionStorage.getItem('TOKEN_KEY'))
+    console.log('name-->', window.sessionStorage.getItem('NAME_KEY'))
+    if(window.sessionStorage.getItem('TOKEN_KEY')==null){
+        document.getElementById('user1').innerHTML='';
+        document.getElementById('user').innerHTML='';
+    }
+    if (window.sessionStorage.getItem('TOKEN_KEY')!==null){
+        document.getElementById("register").innerHTML='';
+        document.getElementById("login").innerHTML='';
+        // document.getElementById('user1').innerHTML='';
+        // document.getElementById('user').innerHTML='';
+
+        if (window.sessionStorage.getItem('ROLE_KEY')=='[{"authority":"ADMIN"}]'){
+            document.getElementById('user').innerHTML='';
+            let name=window.sessionStorage.getItem('NAME_KEY');
+            document.getElementById('user1').innerHTML='User:' +" "+name;
+        }else {
+            let name1=window.sessionStorage.getItem('NAME_KEY');
+            document.getElementById('user1').innerHTML='';
+            document.getElementById('user').innerHTML='User:' +" "+name1;
+        }
+    }
+
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" rel="stylesheet"/>

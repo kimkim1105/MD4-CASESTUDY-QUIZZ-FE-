@@ -21,11 +21,11 @@
 <body>
 <h1 id="user-accounts2">user account</h1>
 <nav class="navbar navbar-expand-lg navbar navbar-light" style="background-color: #e3f2fd;">
-<<<<<<< HEAD:user-acount.html
-    <a class="navbar-brand" href="index.html">Home</a>
-=======
-    <a class="navbar-brand" href="/user/index.html.html">Home</a>
->>>>>>> abd19e154794e46751d2eccd8949dfb8daf2fff3:user/user-acount.html
+<!--<<<<<<< HEAD:user-acount.html-->
+    <a class="navbar-brand" href="../home/home.html">Home</a>
+<!--=======-->
+<!--    <a class="navbar-brand" href="/user/index.html.html">Home</a>-->
+<!--&gt;>>>>>> abd19e154794e46751d2eccd8949dfb8daf2fff3:user/user-acount.html-->
     <div class="col-sm-11" style="text-align: right">
         <button type="button" class="btn btn-danger" onclick="logOut()">LOG OUT</button>
         <button type="button" class="btn btn-danger" onclick="changePasswordForm()">Change Password</button>
@@ -44,7 +44,7 @@
 
     function logOut(){
         window.sessionStorage.clear();
-        window.location.href = 'index.html'
+        window.location.href = '../home/home.html'
     }
     let name=window.sessionStorage.getItem('NAME_KEY');
     let roles=window.sessionStorage.getItem('ROLE_KEY');
