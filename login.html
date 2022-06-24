@@ -89,13 +89,12 @@
                     window.sessionStorage.removeItem('AVATAR_KEY');
                     window.sessionStorage.setItem('AVATAR_KEY',data.avatar);
                     window.sessionStorage.setItem('ROLE_KEY',JSON.stringify(data.roles));
-                    if (window.sessionStorage.getItem('ROLE_KEY')=='[{"authority":"ADMIN"}]'){
-                        window.location.href='admin.html';
-                    }else if (window.sessionStorage.getItem('ROLE_KEY')=='[{"authority":"USER"}]'){
-                        window.location.href='user-acount.html';
-                    }
-
-
+                    // if (window.sessionStorage.getItem('ROLE_KEY')=='[{"authority":"ADMIN"}]'){
+                    //     window.location.href='adminmanager.html';
+                    // }else if (window.sessionStorage.getItem('ROLE_KEY')=='[{"authority":"USER"}]'){
+                    //     window.location.href='user-acount.html';
+                    // }
+                    window.location.href='index.html';
 
                 }
             })
