@@ -331,7 +331,7 @@
 <body>
 <header>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
-        <a class="navbar-brand" href="index.html"><strong>QUIZZ</strong></a>
+        <a class="navbar-brand"><strong>QUIZZ</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -339,7 +339,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="../home/home.html">Home <span class="sr-only">(current)</span></a>
                     <a id="user" href="../user/user-acount.html" >User account</a>
                     <a id="user1" href="../user/adminmanager.html" >User account:</a>
                 </li>
@@ -510,6 +510,7 @@
 </div>
 </body>
 <script>
+    console.log('id-->',window.sessionStorage.getItem('TOKEN_ID'))
     console.log('token-->',window.sessionStorage.getItem('TOKEN_KEY'))
     console.log('name-->', window.sessionStorage.getItem('NAME_KEY'))
     if(window.sessionStorage.getItem('TOKEN_KEY')==null){
