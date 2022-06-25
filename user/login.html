@@ -57,9 +57,6 @@
                     <a class="nav-link" href="../home/home.html">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../user/login.html">Login</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="../user/register.html">Register</a>
                 </li>
             </ul>
@@ -74,7 +71,7 @@
                 <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5">
-                            <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+                            <h2 class="text-uppercase text-center mb-5">Login</h2>
 
                             <div class="form-outline mb-4">
                                 <input type="text" id="username" name="username" class="form-control form-control-lg" placeholder="User Name"/>
@@ -86,10 +83,10 @@
 
 
                             <div class="d-flex justify-content-center">
-                                <button id="btn-login" type="button" name="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                                <button id="btn-login" type="button" name="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
                             </div>
 
-                            <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="../user/login.html" class="fw-bold text-body"><u>Login here</u></a></p>
+<!--                            <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="../user/login.html" class="fw-bold text-body"><u>Login here</u></a></p>-->
 
                         </div>
                     </div>
@@ -114,10 +111,14 @@
         contentType:'application/json; charset=utf8',
         success:function (data){
         console.log('data login ===',data)
+            window.sessionStorage.removeItem('TOKEN_ID');
+            window.sessionStorage.setItem('TOKEN_ID',data.id)
         window.sessionStorage.removeItem('TOKEN_KEY');
         window.sessionStorage.setItem('TOKEN_KEY',data.token);
         window.sessionStorage.removeItem('NAME_KEY');
         window.sessionStorage.setItem('NAME_KEY',data.name);
+        // window.sessionStorage.removeItem('USERNAME_KEY');
+        // window.sessionStorage.setItem('USERNAME_KEY',data.username);
         window.sessionStorage.removeItem('AVATAR_KEY');
         window.sessionStorage.setItem('AVATAR_KEY',data.avatar);
         window.sessionStorage.setItem('ROLE_KEY',JSON.stringify(data.roles));
