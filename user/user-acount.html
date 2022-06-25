@@ -106,139 +106,133 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
-            integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
-            crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
-<body onload="showUserById()">
-<!--<button onclick="showUserById()">Show All</button>-->
-
-<section style="background-color: #eee;">
+<section style="background: linear-gradient(to bottom, #68EACC 0%, #00CCFF 100%);width: 100%; min-height: 700px;">
     <div class="container py-5">
         <div class="row">
             <div class="col">
                 <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-                    <ol class="breadcrumb mb-0" style="display: inline-block">
+                    <ul class="breadcrumb mb-0" style="display: inline-block">
                         <li class="breadcrumb-item"><a href="../home/home.html">Home</a></li>
-                    </ol>
-                    <ol class="breadcrumb mb-0" style="display:inline-block; float: right">
+                    </ul>
+                    <ul  style="display:inline-block; float: right; list-style-type: none; padding-left: 5px; margin-top: 5px">
                         <li class="breadcrumb-item">
-                            <button onclick="changePasswordForm()" type="submit" class="btn btn-danger">Change
-                                Password
-                            </button>
+                            <button onclick="logOut()" type="submit" class="btn btn-primary">Log Out</button>
                         </li>
-                    </ol>
-
-                    <ol class="breadcrumb mb-0" style="display:inline-block; float: right">
+                    </ul>
+                    <ul  style="display:inline-block; float: right; list-style-type: none; padding-left: 5px; margin-top: 5px">
                         <li class="breadcrumb-item">
-                            <button onclick="logOut()" type="submit" class="btn btn-danger">Log Out</button>
+                            <button onclick="edit()" type="submit" class="btn btn-primary">Edit</button>
                         </li>
-                    </ol>
-
-                    <ol class="breadcrumb mb-0" style="display:inline-block; float: right">
+                    </ul>
+                    <ul style="display:inline-block; float: right; list-style-type: none; padding-left: 5px; margin-top: 5px">
                         <li class="breadcrumb-item">
-                            <button onclick="edit()" type="submit" class="btn btn-danger">Edit</button>
+                            <button onclick="changePasswordForm()" type="submit" class="btn btn-primary">Change Password</button>
                         </li>
-                    </ol>
+                    </ul>
                 </nav>
             </div>
         </div>
-        <div id="display">
 
-        </div>
-    </div>
-</section>
-</body>
-<script>
-    let show = document.getElementById("display");
-
-    function showUserById() {
-        let token = window.sessionStorage.getItem("TOKEN_KEY");
-        let id = window.sessionStorage.getItem("TOKEN_ID");
-        $.ajax({
-            type: "GET",
-            contentType: 'application/json; charset=utf8',
-            headers: {
-                Authorization: 'Bearer ' + token
-            },
-            url: "http://localhost:8080/users/findbyid/" + id,
-            success: function (user) {
-                let content = `        <div class="row">
+        <div class="row">
             <div class="col-lg-4">
                 <div class="card mb-4">
-                    <div class="card-body text-center">
+                    <div class="card-body text-center" style="height: 326px;">
                         <img id="avatar" src="${user.avatar}" alt="avatar"
-                             class="rounded-circle img-fluid" style="width: 150px;">
+                             class="rounded-circle img-fluid" style="width: 150px; margin-top: 90px">
                     </div>
                 </div>
             </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <input name="id" type="hidden" class="form-control" value="${user.id}"
+                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                        <hr>
                         <div class="row">
                             <span id="validate_name" style="color: red"></span>
                             <div class="col-sm-3">
-                                <span class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Name</span>
+                                <span class="input-group-text">Name</span>
                             </div>
                             <div class="col-sm-9">
-                                <p id="name" name="name" class="form-control" value=""
-                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">${user.name}</p>
+                                <p class="input-group-text" id="name" value="">Name</p>
+<!--                                <input id="name" name="name" type="text" class="form-control" value=""-->
+<!--                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">-->
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <span id="validate_username" style="color: red"></span>
                             <div class="col-sm-3">
-                                <span class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Username</span>
+                                <span class="input-group-text">Username</span>
                             </div>
                             <div class="col-sm-9">
-                                <p id="username" name="username" class="form-control" value=""
-                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">${user.username}</p>
+                                <input id="username" name="username" type="text" class="form-control" value=""
+                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <span id="validate_email" style="color: red"></span>
                             <div class="col-sm-3">
-                                <span class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Email</span>
+                                <span class="input-group-text">Email</span>
                             </div>
                             <div class="col-sm-9">
-                                <p id="email" name="email" class="form-control" value=""
-                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">${user.email}</p>
+                                <input id="email" name="email" type="text" class="form-control" value=""
+                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <span id="validate_role" style="color: red"></span>
                             <div class="col-sm-3">
-                                <span class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Role</span>
+                                <span class="input-group-text">Role</span>
                             </div>
                             <div class="col-sm-9">
-                                <p id="role" name="role" class="form-control" value=""
-                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">${user.roles[0].name}</p>
+                                <input id="role" name="role" type="text" class="form-control" value=""
+                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>`
-                show.innerHTML = content;
-            }
-        })
-
-    }
+        </div>
+    </div>
+</section>
+</body>
+<script>
+    let name = sessionStorage.getItem("NAME_KEY")
+    let username = sessionStorage.getItem("USERNAME_KEY")
+    let avatar = sessionStorage.getItem("AVATAR_KEY")
+    let email = sessionStorage.getItem("EMAIL_KEY")
+    let role = JSON.parse(sessionStorage.getItem("ROLE_KEY"))
+    console.log(name, username, avatar, email, role)
+    document.getElementById("name").innerHTML = name;
+    document.getElementById("username").value = username;
+    document.getElementById("avatar").src = avatar;
+    document.getElementById("email").value = email;
+    document.getElementById("role").value = role[0].authority;
 
     function changePasswordForm() {
         window.location.href = '../user/change-password.html';
@@ -248,18 +242,6 @@
         window.sessionStorage.clear();
         window.location.href = '../home/home.html'
     }
-
-    let name = sessionStorage.getItem("NAME_KEY")
-    let username = sessionStorage.getItem("USERNAME_KEY")
-    let avatar = sessionStorage.getItem("AVATAR_KEY")
-    let email = sessionStorage.getItem("EMAIL_KEY")
-    let role = JSON.parse(sessionStorage.getItem("ROLE_KEY"))
-    console.log(name, username, avatar, email, role)
-    document.getElementById("name").value = name;
-    document.getElementById("username").value = username;
-    document.getElementById("avatar").src = avatar;
-    document.getElementById("email").value = email;
-    document.getElementById("role").value = role[0].authority;
 
     function edit() {
         let id = sessionStorage.getItem("ID_KEY");
@@ -283,13 +265,6 @@
         } else {
             document.getElementById("validate_username").innerHTML = "";
         }
-
-        // if (password == "") {
-        //     document.getElementById("validate_password").innerHTML = "The password is required!";
-        //     return;
-        // } else {
-        //     document.getElementById("validate_password").innerHTML = "";
-        // }
 
         if (email == "") {
             document.getElementById("validate_email").innerHTML = "The email is required!";
