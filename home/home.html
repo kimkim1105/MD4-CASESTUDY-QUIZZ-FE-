@@ -23,11 +23,27 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .btn-primary {
+            background-color: #ffc107;
+            margin-right: 5px;
+        }
+
         body {
+
+            width: 100%;
+            min-height: 700px;
             color: #566787;
             /*background: #f5f5f5;*/
-            background-color: #17a2b8;
-            font-family: 'Varela Round', sans-serif;
+            /*background-color: #17a2b8;*/
+            background: linear-gradient(to bottom, #68EACC 0%, #00CCFF 100%);
+            /*font-family: 'Varela Round', sans-serif;*/
+            font-family: "Poppins", sans-serif;
+
             font-size: 13px;
         }
 
@@ -306,15 +322,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-                    <a id="user" href="../user/user-acount.html">User account</a>
-                    <a id="user1" href="../user/adminmanager.html">User account:</a>
+                <li class="nav-item active" style="margin-top: 15px">
+                    <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active" style="margin-top: 15px">
+                    <a class="nav-link" id="user" href="../user/user-acount.html">User account</a>
+                    <a class="nav-link" id="user1" href="../user/adminmanager.html">User account:</a>
+                </li>
+                <li class="nav-item active" style="margin-top: 10px">
                     <a id="login" class="nav-link" href="../user/login.html">Login</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active" style="margin-top: 10px">
                     <a id="register" class="nav-link" href="../user/register.html">Register</a>
                 </li>
             </ul>
@@ -497,7 +515,7 @@
                             '<td class="table-light">' + '<p>' + item.user.name + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.level.level + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.date + '</p>' + '</td>' +
-                            '<td ><a class="btn btn-primary" onclick=findQuestionByTest(' + item.id + ')">Do Quizz</a> </td>' +
+                            '<td ><a class="btn btn-primary" onclick="findQuestionByTest(' + item.id + ')">Do Quizz</a> </td>' +
                             '</tr>'
                     })
                     dataHtml += '</table>';
@@ -595,11 +613,11 @@
         if (window.sessionStorage.getItem('ROLE_KEY') == '[{"authority":"ADMIN"}]') {
             document.getElementById('user').innerHTML = '';
             let name = window.sessionStorage.getItem('NAME_KEY');
-            document.getElementById('user1').innerHTML = 'User:' + " " + name;
+            document.getElementById('user1').innerHTML = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1); //'User:' + " " + name
         } else {
             let name1 = window.sessionStorage.getItem('NAME_KEY');
             document.getElementById('user1').innerHTML = '';
-            document.getElementById('user').innerHTML = 'User:' + " " + name1;
+            document.getElementById('user').innerHTML = "Profile's " + name1.charAt(0).toUpperCase() + name1.slice(1);// 'User:' + " " + name1
         }
     }
 
