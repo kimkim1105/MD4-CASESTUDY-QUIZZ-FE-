@@ -18,7 +18,10 @@
     <a class="nav-link" onclick="showAddForm()">Thêm Mới <span class="sr-only">(current)</span></a>
 </li>
 
-
+<div class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" type="text" placeholder="Search" id="search" >
+    <button class="btn btn-outline-success my-2 my-sm-0"  onclick="findAllQuestionsByCategory()">Search</button>
+</div>
 <div id="long"></div>
 <div>
     <table class="table" id="display"></table>
@@ -89,6 +92,17 @@
             url: 'http://localhost:8080/categories/' + id,
             success: function (data) {
                 fillAll(data)
+            }
+        })
+    }
+    function findAllQuestionsByCategory(id) {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/categories/"+id+"/questions",
+            success: function (data) {
+                display(data)
+            }, error: function (error) {
+                console.log(error);
             }
         })
     }
