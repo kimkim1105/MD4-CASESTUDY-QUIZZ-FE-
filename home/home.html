@@ -454,7 +454,7 @@
                             '<td class="table-light">' + '<p>' + item.user.name + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.level.level + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.date + '</p>' + '</td>' +
-                            '<td ><a class="btn btn-primary" onclick=findQuestionByTest(' + item.id + ')">Do Quizz</a> </td>' +
+                            '<td ><a class="btn btn-primary" onclick="findQuestionByTest(' + item.id + ')">Do Quizz</a> </td>' +
                             '</tr>'
                     })
                     dataHtml += '</table>';
@@ -725,54 +725,16 @@
         })
     }
 
-    function pageQuestion() {
-
-        $(function () {
-            // console.log('size trong pagination ==',size)
-            let container = $('#demo');
-            container.pagination({
-                dataSource: 'http://localhost:8080/questions',
-                locator: 'items',
-                totalNumber: size,
-                pageSize: 3,
-                callback: function (response, pagination) {
-                    let dataHtml = '<table border="1" class="table">'
-                    dataHtml +=
-                        '<tr class="table-success">' +
-                        '<th >Content</th>' +
-                        '<th >Category</th>' +
-                        '<th>Level</th>' +
-                        '<th>Type</th>' +
-                        '<th>Edit</th>' +
-                        '<th>Delete</th>' +
-                        '</tr>'
-
-                    let pageStart = (pagination.pageNumber - 1) * pagination.pageSize;
-                    let pageEnd = pageStart + pagination.pageSize;
-                    let pageItems = response.slice(pageStart, pageEnd);
-                    $.each(pageItems, function (index, item) {
-                        dataHtml +=
-                            '<tr>' +
-                            '<td class="table-light">' + '<p>' + item.category.name + '</p>' + '</td>' +
-                            '<td class="table-light">' + '<p>' + item.content + '</p>' + '</td>' +
-                            '<td class="table-light">' + '<p>' + item.level.level + '</p>' + '</td>' +
-                            '<td class="table-light">' + '<p>' + item.type.type + '</p>' + '</td>' +
-                            '<td><a href="#editQuestionModal" class="btn btn-primary">Edit</a></td>' +
-                            '<td><a href="#deleteQuestionModal"><button class="btn btn-danger">Delete</button></a></td>' +
-                            '</tr>'
-
-                    })
-                    dataHtml += '</table>';
-                    container.prev().html(dataHtml);
-                }
-            })
-        })
-    }
 </script>
-
 <script>
     console.log('token-->', window.sessionStorage.getItem('TOKEN_KEY'))
     console.log('name-->', window.sessionStorage.getItem('NAME_KEY'))
+
+    function logOut() {
+        window.sessionStorage.clear();
+        window.location.href = '../home/home.html';
+    }
+
     if (window.sessionStorage.getItem('TOKEN_KEY') == null) {
         document.getElementById('user1').innerHTML = '';
         document.getElementById('user').innerHTML = '';
