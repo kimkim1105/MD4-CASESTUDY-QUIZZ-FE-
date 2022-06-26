@@ -23,7 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
@@ -323,20 +323,22 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="home.html">Home<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active" id="loginUser">
                     <a id="login" class="nav-link" href="../user/login.html">Login</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item active" id="registerUser">
                     <a id="register" class="nav-link" href="../user/register.html">Register</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" id="user" href="../user/user-acount.html"><span class="sr-only">(current)</span></a>
                 </li>
                 <li>
-                    <a class="nav-link" id="user1" href="../user/adminmanager.html"><span class="sr-only">(current)</span></a>
+                    <a class="nav-link" id="user1" href="../user/adminmanager.html"><span
+                            class="sr-only">(current)</span></a>
                 </li>
+
             </ul>
         </div>
     </nav>
@@ -350,12 +352,17 @@
                         <div class="col-sm-6">
                             <h2>Test List</h2>
                         </div>
+                        <div class="col-sm-6">
+                            <a onclick="createTestForm()" href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i
+                                    class="material-icons">&#xE147;</i> <span>Add Test</span></a>
+                        </div>
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
                     <thead>
                     </thead>
                     <tbody id="demo">
+
                     </tbody>
                 </table>
             </div>
@@ -369,91 +376,30 @@
         <div class="modal-content">
             <form>
                 <div class="modal-header">
-                    <h4 class="modal-title">Add Employee</h4>
+                    <h4 class="modal-title">Add Test</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Name</label>
+                        <label>Test Name</label>
                         <input type="text" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Address</label>
-                        <textarea class="form-control" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone</label>
-                        <input type="text" class="form-control" required>
+                        <label>Level</label>
+                        <select name="" id="level">
+                            <option id="level_id" value="0">Choose Level</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-success" value="Add">
+                    <input type="submit" class="btn btn-success" value="Add Test">
                 </div>
             </form>
         </div>
     </div>
 </div>
-<!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Employee</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Address</label>
-                        <textarea class="form-control" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-info" value="Save">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <h4 class="modal-title">Delete Employee</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete these Records?</p>
-                    <p class="text-warning"><small>This action cannot be undone.</small></p>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-danger" value="Delete">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 </body>
 <script>
     let size = 0;
@@ -661,6 +607,69 @@
             }
         });
     }
+
+
+    // createform
+    function createTestForm() {
+        let str1 = '';
+        $.ajax({
+            async: false,
+            //do AJAX là bất động bộ nên phải thêm async: false để chuyển về đồng bộ
+            url: 'http://localhost:8080/levels',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    str1 += '<option value="' + data[i].id + '">' + data[i].level + '</option>';
+                }
+                document.getElementById('level').innerHTML = str1;
+            }
+        })
+    }
+
+    function pageQuestion() {
+
+        $(function () {
+            // console.log('size trong pagination ==',size)
+            let container = $('#demo');
+            container.pagination({
+                dataSource: 'http://localhost:8080/questions',
+                locator: 'items',
+                totalNumber: size,
+                pageSize: 3,
+                callback: function (response, pagination) {
+                    let dataHtml = '<table border="1" class="table">'
+                    dataHtml +=
+                        '<tr class="table-success">' +
+                        '<th >Content</th>' +
+                        '<th >Category</th>' +
+                        '<th>Level</th>' +
+                        '<th>Type</th>' +
+                        '<th>Edit</th>' +
+                        '<th>Delete</th>' +
+                        '</tr>'
+
+                    let pageStart = (pagination.pageNumber - 1) * pagination.pageSize;
+                    let pageEnd = pageStart + pagination.pageSize;
+                    let pageItems = response.slice(pageStart, pageEnd);
+                    $.each(pageItems, function (index, item) {
+                        dataHtml +=
+                            '<tr>' +
+                            '<td class="table-light">' + '<p>' + item.category.name + '</p>' + '</td>' +
+                            '<td class="table-light">' + '<p>' + item.content + '</p>' + '</td>' +
+                            '<td class="table-light">' + '<p>' + item.level.level + '</p>' + '</td>' +
+                            '<td class="table-light">' + '<p>' + item.type.type + '</p>' + '</td>' +
+                            '<td><a href="#editQuestionModal" class="btn btn-primary">Edit</a></td>' +
+                            '<td><a href="#deleteQuestionModal"><button class="btn btn-danger">Delete</button></a></td>' +
+                            '</tr>'
+
+                    })
+                    dataHtml += '</table>';
+                    container.prev().html(dataHtml);
+                }
+            })
+        })
+    }
 </script>
 
 <script>
@@ -672,19 +681,19 @@
     }
 
     if (window.sessionStorage.getItem('TOKEN_KEY') !== null) {
-        document.getElementById("register").innerHTML = '';
+        document.getElementById("registerUser").innerHTML = '<a class="nav-link" id="logout" onclick="logOut()" href="../home/home.html">Log Out<span class="sr-only">(current)</span></a>\n';
         document.getElementById("login").innerHTML = '';
-        // document.getElementById('user1').innerHTML='';
-        // document.getElementById('user').innerHTML='';
 
         if (window.sessionStorage.getItem('ROLE_KEY') == '[{"authority":"ADMIN"}]') {
             document.getElementById('user').innerHTML = '';
             let name = window.sessionStorage.getItem('NAME_KEY');
-            document.getElementById('user1').innerHTML = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1); //'User:' + " " + name
-
+            let a = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1);
+            document.getElementById("loginUser").innerHTML = '<a class="nav-link" id="user1" href="../user/adminmanager.html"><span class="sr-only">(current)</span></a>\n';
+            document.getElementById('user1').innerHTML = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1);
         } else {
             let name1 = window.sessionStorage.getItem('NAME_KEY');
             document.getElementById('user1').innerHTML = '';
+            document.getElementById("loginUser").innerHTML = '<a class="nav-link" id="user" href="../user/user-acount.html"><span class="sr-only">(current)</span></a>\n';
             document.getElementById('user').innerHTML = "Profile's " + name1.charAt(0).toUpperCase() + name1.slice(1);// 'User:' + " " + name1
         }
     }
