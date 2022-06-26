@@ -17,12 +17,11 @@
 <li class="nav-item active">
     <a class="nav-link" onclick="showAddForm()">Thêm Mới <span class="sr-only">(current)</span></a>
 </li>
-
-<div class="form-inline my-2 my-lg-0">
-    <input class="form-control mr-sm-2" type="text" placeholder="Search" id="search" >
-    <button class="btn btn-outline-success my-2 my-sm-0"  onclick="findAllQuestionsByCategory()">Search</button>
-</div>
 <div id="long"></div>
+<div >
+    <table id="question">
+    </table>
+</div>
 <div>
     <table class="table" id="display"></table>
 </div>
@@ -31,16 +30,19 @@
     function display(data) {
         let str = ` <tr>
         <th scope="col">name</th>
+        <th scope="col">name</th>
         <th scope="col">action</th>
     </tr>`
         for (let i = 0; i < data.length; i++) {
             str += `   <tr>
                         <td>${data[i].name}</td>
+                        <td><button onclick="findAllQuestionsByCategory(${data[i].id})">tim</button> </td>
                         <td><button class="button1" onclick="deleteSt(${data[i].id})">delete</button></td>
                     </tr>`
         }
         document.getElementById('display').innerHTML = str;
     }
+
 
     function save() {
         let name = document.getElementById("name").value;
@@ -96,16 +98,32 @@
         })
     }
     function findAllQuestionsByCategory(id) {
+        let str="";
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/categories/"+id+"/questions",
             success: function (data) {
-                display(data)
+                let dataHtml = '<table border="1" class="table">'
+                dataHtml +=
+                    '<tr class="table-success">' +
+                    '<th >Content</th>' +
+                    '<th >Category</th>' +
+                    '<th>Level</th>' +
+                    '</tr>'
+                for (let i = 0; i < data.length; i++) {
+                   dataHtml += `   <tr>
+                        <td>${data[i].content}</td>
+                        <td>${data[i].level.level}</td>
+                      <td>${data[i].category.name}</td>
+                    </tr>`
+                }
+                document.getElementById('question').innerHTML = dataHtml;
             }, error: function (error) {
                 console.log(error);
             }
         })
     }
 </script>
+
 </body>
 </html>
