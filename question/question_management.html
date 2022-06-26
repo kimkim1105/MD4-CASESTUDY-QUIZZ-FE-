@@ -291,76 +291,6 @@
             pageQuestion();
         });
 
-
-        // create question
-        // function createQuestion(){
-        //   let question = {};
-        //   let createSuccess = "create success";
-        //   let updateSuccess = "update success";
-        //   let changeURL = '';
-        //   let changeMethod = '';
-        //   $('#btn-create').click(function (){
-        //     question.content = $('#ques_content').val();
-        //     blog.content = $('#content').val();
-        //     blog.category = {
-        //       id : $('#category').val()
-        //     }
-        //     blog.file = resultImage();
-        //
-        //
-        //     if(blog.name===''){
-        //       document.getElementById("sp_name").innerHTML = 'Name cannot blank'
-        //       return;
-        //     }else {
-        //       document.getElementById("sp_name").innerHTML = ''
-        //     }
-        //     if(blog.content===''){
-        //       document.getElementById("sp_content").innerHTML = 'Content cannot blank'
-        //       return;
-        //     }else {
-        //       document.getElementById("sp_content").innerHTML = ''
-        //     }
-        //     if(blog.category.id==0){
-        //       document.getElementById("sp_category").innerHTML = 'Category cannot blank'
-        //       return;
-        //     }else {
-        //       document.getElementById("sp_category").innerHTML = ''
-        //     }
-        //     let id = $('#id').val();
-        //     console.log('id ====== ', id)
-        //     if(id){
-        //       changeURL = 'http://localhost:8080/blogs/'+id;
-        //       changeMethod = 'PUT'
-        //     } else {
-        //       changeURL = 'http://localhost:8080/blogs';
-        //       changeMethod = 'POST';
-        //     }
-        //
-        //     let blogObj = JSON.stringify(blog);
-        //     console.log(blogObj)
-        //     console.log('blog ===> ', blog)
-        //     $.ajax({
-        //       url:changeURL,
-        //       method: changeMethod,
-        //       contentType:'application/json; charset=utf8',
-        //       data: blogObj,
-        //       success: function (data){
-        //         console.log(data)
-        //         if (JSON.stringify(data)==JSON.stringify(createSuccess)){
-        //           document.getElementById("create_success").innerHTML = 'Blog create success';
-        //         }
-        //         if(JSON.stringify(data)==JSON.stringify(updateSuccess)){
-        //           console.log('vao day hong')
-        //           document.getElementById('create_success').innerHTML = 'Update Blog Success!';
-        //           document.getElementById('btn-create').innerHTML = 'UPDATED'
-        //         }
-        //         pageQuestion();
-        //         resetFormCreate();
-        //       }
-        //     })
-        //   })
-        // }
-
         // createAnswer
         function createAnswerForm() {
             let str = '';
@@ -420,55 +350,6 @@
 
         // createform
         function createQuestionForm() {
-            let str = '';
-            $.ajax({
-                async: false,
-                //do AJAX là bất động bộ nên phải thêm async: false để chuyển về đồng bộ
-                url: 'http://localhost:8080/categories',
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    // console.log("category===="+data)
-                    for (let i = 0; i < data.length; i++) {
-                        str += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
-                    }
-                    document.getElementById('category').innerHTML = str;
-                    // console.log('size trong list == ',size)
-                }
-            })
-            let str1 = '';
-            $.ajax({
-                async: false,
-                //do AJAX là bất động bộ nên phải thêm async: false để chuyển về đồng bộ
-                url: 'http://localhost:8080/levels',
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    for (let i = 0; i < data.length; i++) {
-                        str1 += '<option value="' + data[i].id + '">' + data[i].level + '</option>';
-                    }
-                    document.getElementById('level').innerHTML = str1;
-                    // console.log('size trong list == ',size)
-                }
-            })
-            let str2 = '';
-            $.ajax({
-                async: false,
-                //do AJAX là bất động bộ nên phải thêm async: false để chuyển về đồng bộ
-                url: 'http://localhost:8080/types',
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    for (let i = 0; i < data.length; i++) {
-                        str2 += '<option value="' + data[i].id + '">' + data[i].type + '</option>';
-                    }
-                    document.getElementById('type').innerHTML = str2;
-                }
-            })
-        }
-
-        // editform
-        function editQuestionForm() {
             let str = '';
             $.ajax({
                 async: false,
