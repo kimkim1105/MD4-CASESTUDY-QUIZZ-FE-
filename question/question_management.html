@@ -384,6 +384,7 @@
                 method: 'GET',
                 dataType: 'json',
                 success: function (data) {
+                    console.log("question ra dang gi "+data)
                     question_id = data.id;
                     // console.log(question_id)
                     let content = document.getElementById('ops').value;
@@ -595,12 +596,12 @@
                         success: function (answer) {
                             console.log("answer=====" + answer)
                             for (let i = 0; i < answer.length; i++) {
-                                console.log("idanswer in submit" + answer[i].id)
+                                // console.log("idanswer in submit" + answer[i].id)
                                 let index = answer[i].id;
                                 let content = answer[i].content;
                                 let newstatus = answer[i].status;
                                 if (document.getElementById(index).checked) {
-                                    console.log(index + "co lay duoc id khong")
+                                    // console.log(index + "co lay duoc id khong")
                                     newstatus = true;
                                     let answer = {
                                         content: content,
@@ -659,8 +660,8 @@
                         method: 'GET',
                         dataType: 'json',
                         success: function (answer) {
-                            console.log(question.type.type)
-                            if (question.type.type === 'single') {
+                            // console.log(question.type.id)
+                            if (question.type.id == 1) {
                                 for (let i = 0; i < answer.length; i++) {
                                     console.log("answeris" + answer[i].id)
                                     str +=
@@ -673,7 +674,7 @@
                                 }
                                 document.getElementById('show_answer').innerHTML = str;
                             }
-                            if (question.type.type === 'multi') {
+                            if (question.type.id == 2) {
                                 for (let i = 0; i < answer.length; i++) {
                                     // console.log("answeris"+answer[i].id)
                                     str +=
