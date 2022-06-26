@@ -137,11 +137,11 @@
                             <button onclick="logOut()" type="submit" class="btn btn-primary">Log Out</button>
                         </li>
                     </ul>
-                    <ul  style="display:inline-block; float: right; list-style-type: none; padding-left: 5px; margin-top: 5px">
-                        <li class="breadcrumb-item">
-                            <button onclick="edit()" type="submit" class="btn btn-primary">Edit</button>
-                        </li>
-                    </ul>
+<!--                    <ul  style="display:inline-block; float: right; list-style-type: none; padding-left: 5px; margin-top: 5px">-->
+<!--                        <li class="breadcrumb-item">-->
+<!--                            <button onclick="edit()" type="submit" class="btn btn-primary">Edit</button>-->
+<!--                        </li>-->
+<!--                    </ul>-->
                     <ul style="display:inline-block; float: right; list-style-type: none; padding-left: 5px; margin-top: 5px">
                         <li class="breadcrumb-item">
                             <button onclick="changePasswordForm()" type="submit" class="btn btn-primary">Change Password</button>
@@ -176,9 +176,7 @@
                                 <span class="input-group-text">Name</span>
                             </div>
                             <div class="col-sm-9">
-                                <p class="input-group-text" id="name" value="">Name</p>
-<!--                                <input id="name" name="name" type="text" class="form-control" value=""-->
-<!--                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">-->
+                                <p class="input-group-text" id="name" value="" style="background-color: white!important;">Name</p>
                             </div>
                         </div>
                         <hr>
@@ -188,8 +186,7 @@
                                 <span class="input-group-text">Username</span>
                             </div>
                             <div class="col-sm-9">
-                                <input id="username" name="username" type="text" class="form-control" value=""
-                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <p class="input-group-text" id="username" value="" style="background-color: white!important;">UserName</p>
                             </div>
                         </div>
                         <hr>
@@ -199,8 +196,7 @@
                                 <span class="input-group-text">Email</span>
                             </div>
                             <div class="col-sm-9">
-                                <input id="email" name="email" type="text" class="form-control" value=""
-                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <p class="input-group-text" id="email" value="" style="background-color: white!important;">Email</p>
                             </div>
                         </div>
                         <hr>
@@ -210,8 +206,7 @@
                                 <span class="input-group-text">Role</span>
                             </div>
                             <div class="col-sm-9">
-                                <input id="role" name="role" type="text" class="form-control" value=""
-                                       aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <p class="input-group-text" id="role" value="" style="background-color: white!important;">Role</p>
                             </div>
                         </div>
                     </div>
@@ -229,10 +224,10 @@
     let role = JSON.parse(sessionStorage.getItem("ROLE_KEY"))
     console.log(name, username, avatar, email, role)
     document.getElementById("name").innerHTML = name;
-    document.getElementById("username").value = username;
+    document.getElementById("username").innerHTML = username;
     document.getElementById("avatar").src = avatar;
-    document.getElementById("email").value = email;
-    document.getElementById("role").value = role[0].authority;
+    document.getElementById("email").innerHTML = email;
+    document.getElementById("role").innerHTML = role[0].authority;
 
     function changePasswordForm() {
         window.location.href = '../user/change-password.html';
@@ -243,60 +238,60 @@
         window.location.href = '../home/home.html'
     }
 
-    function edit() {
-        let id = sessionStorage.getItem("ID_KEY");
-        let name = document.getElementById("name").value;
-        let email = document.getElementById("email").value;
-        let username = document.getElementById("username").value;
-        let avatar = document.getElementById("avatar").src;
-        let roleName = document.getElementById("role").value;
-        let regexEmail = /^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)$/;
-
-        if (name == "") {
-            document.getElementById("validate_name").innerHTML = "The name is required!";
-            return;
-        } else {
-            document.getElementById("validate_name").innerHTML = "";
-        }
-
-        if (username == "") {
-            document.getElementById("validate_username").innerHTML = "The username is required!";
-            return;
-        } else {
-            document.getElementById("validate_username").innerHTML = "";
-        }
-
-        if (email == "") {
-            document.getElementById("validate_email").innerHTML = "The email is required!";
-            return;
-        } else if (!regexEmail.test(email)) {
-            document.getElementById("validate_email").innerHTML = "The email is not valid!"
-            return;
-        } else {
-            document.getElementById("validate_email").innerHTML = "";
-        }
-
-        let editUser = {
-            name: name,
-            username: username,
-            email: email,
-            // password: password,
-            avatar: avatar,
-            role: roleName
-        };
-        console.log("editUser.....", editUser);
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            type: "PUT",
-            data: JSON.stringify(editUser),
-            url: "http://localhost:8080/users/" + id,
-            success: function () {
-                alert("success")
-            }
-        });
-    }
+    // function edit() {
+    //     let id = sessionStorage.getItem("ID_KEY");
+    //     let name = document.getElementById("name").value;
+    //     let email = document.getElementById("email").value;
+    //     let username = document.getElementById("username").value;
+    //     let avatar = document.getElementById("avatar").src;
+    //     let roleName = document.getElementById("role").value;
+    //     let regexEmail = /^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)$/;
+    //
+    //     if (name == "") {
+    //         document.getElementById("validate_name").innerHTML = "The name is required!";
+    //         return;
+    //     } else {
+    //         document.getElementById("validate_name").innerHTML = "";
+    //     }
+    //
+    //     if (username == "") {
+    //         document.getElementById("validate_username").innerHTML = "The username is required!";
+    //         return;
+    //     } else {
+    //         document.getElementById("validate_username").innerHTML = "";
+    //     }
+    //
+    //     if (email == "") {
+    //         document.getElementById("validate_email").innerHTML = "The email is required!";
+    //         return;
+    //     } else if (!regexEmail.test(email)) {
+    //         document.getElementById("validate_email").innerHTML = "The email is not valid!"
+    //         return;
+    //     } else {
+    //         document.getElementById("validate_email").innerHTML = "";
+    //     }
+    //
+    //     let editUser = {
+    //         name: name,
+    //         username: username,
+    //         email: email,
+    //         // password: password,
+    //         avatar: avatar,
+    //         role: roleName
+    //     };
+    //     console.log("editUser.....", editUser);
+    //     $.ajax({
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         type: "PUT",
+    //         data: JSON.stringify(editUser),
+    //         url: "http://localhost:8080/users/" + id,
+    //         success: function () {
+    //             alert("success")
+    //         }
+    //     });
+    // }
 </script>
 </html>
