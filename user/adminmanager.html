@@ -429,7 +429,6 @@
                                     <td><img style="width: 70px" height="70px class = "show_image" src= "${user[i].avatar}"></td>
                                     <td>${JSON.stringify(user[i].roles[0].name)}</td>
                                     <td><button onclick="deleteUser(${user[i].id})">Delete</button></td>
-<!--                                    <td><button onclick="showEditForm(${user[i].id})">Edit</button></td>-->
                                     </tr>`;
         }
         content+='</table>';
@@ -440,7 +439,7 @@
 
   function deleteUser(id) {
     let roles=window.sessionStorage.getItem('ROLE_KEY');
-    if (roles=='[{"authority":"ADMIN"}]') {
+    if (roles=='[{"authority":"ROLE_ADMIN"}]') {
       $.ajax({
         headers: {
           'Accept': 'application/json',
@@ -451,14 +450,12 @@
         success: function () {
           findAll()
           pageUser()
-
         },
         error: function (error) {
           console.log(error)
         }
       })
     }
-
   }
 
   $(document).ready(function () {
@@ -523,13 +520,12 @@
 
   function logOut(){
     window.sessionStorage.clear();
-    window.location.href = 'index.html'
+    window.location.href = 'home.html'
   }
-
 
   let name=window.sessionStorage.getItem('NAME_KEY');
   let roles=window.sessionStorage.getItem('ROLE_KEY');
-  if (roles=='[{"authority":"ADMIN"}]'){
+  if (roles=='[{"authority":"ROLE_ADMIN"}]'){
     roles='admin';
   }else {
     roles='user';
