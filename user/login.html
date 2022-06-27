@@ -74,7 +74,8 @@
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Login</h2>
-
+                            <p id="status" style="color: red" class="alert alert-primary">Please fill in the form to create account!</p>
+                            <br>
                             <div class="form-outline mb-4">
                                 <input type="text" id="username" name="username" class="form-control form-control-lg"
                                        placeholder="Username"/>
@@ -113,6 +114,10 @@
                 data: signInFormOBJ,
                 contentType: 'application/json; charset=utf8',
                 success: function (data) {
+                    if (data.status==202){
+                        document.getElementById('status').innerHTML = 'Login fail! try again!'
+                        return;
+                    }
                     console.log('data login ===', data)
                     window.sessionStorage.removeItem('TOKEN_KEY');
                     window.sessionStorage.setItem('TOKEN_KEY', data.token);
@@ -127,7 +132,10 @@
                     window.sessionStorage.removeItem('AVATAR_KEY');
                     window.sessionStorage.setItem('AVATAR_KEY', data.avatar);
                     window.sessionStorage.setItem('ROLE_KEY', JSON.stringify(data.roles));
-                    window.location.href = '../home/home.html';
+
+                        window.location.href = '../home/home.html';
+
+
 
                 }
             })
