@@ -520,6 +520,55 @@
                 }
             })
         }
+        // function editAnswer(editid) {
+        //             $.ajax({
+        //                 async: false,
+        //                 //do AJAX là bất động bộ nên phải thêm async: false để chuyển về đồng bộ
+        //                 url: 'http://localhost:8080/questions/' + editid + '/answers',
+        //                 method: 'GET',
+        //                 dataType: 'json',
+        //                 success: function (answer) {
+        //                     console.log("answer=====" + answer)
+        //                     for (let i = 0; i < answer.length; i++) {
+        //                         // console.log("idanswer in submit" + answer[i].id)
+        //                         let index = answer[i].id;
+        //                         let content = answer[i].content;
+        //                         let newstatus = answer[i].status;
+        //                         if (document.getElementById(index).checked) {
+        //                             console.log(index + "co lay duoc id khong")
+        //                             newstatus = true;
+        //                         }else {
+        //                             newstatus = false;
+        //                         }
+        //                         let answer = {
+        //                             content: content,
+        //                             status: newstatus,
+        //                             question: {
+        //                                 id: question_id
+        //                             }
+        //                         }
+        //                         let answerObj = JSON.stringify(answer);
+        //                         $.ajax({
+        //                             headers: {
+        //                                 'Accept': 'application/json',
+        //                                 'Content-Type': 'application/json'
+        //                             },
+        //                             url: 'http://localhost:8080/answers/' + index,
+        //                             type: 'PUT',
+        //                             data: answerObj,
+        //                             success: function (data) {
+        //                                 listQuestion();
+        //                                 pageQuestion();
+        //                                 resetFormCreate();
+        //                                 window.location.href = "question_management.html"
+        //                                 // createQuestionForm();
+        //                             }
+        //                         })
+        //                     }
+        //                 }
+        //
+        //             })
+        //         }
 
         //GET LIST answer
         function listAnswer() {
@@ -689,74 +738,118 @@
                             for (let i = 0; i < data.length; i++) {
                                 if (data[i].level == question.level.level) {
                                     str1 += '<option selected="selected" value="' + data[i].id + '">' + data[i].level + '</option>';
+                                }else {
+                                    str1 += '<option value="' + data[i].id + '">' + data[i].level + '</option>';
                                 }
-                                str1 += '<option value="' + data[i].id + '">' + data[i].level + '</option>';
+
                             }
                             document.getElementById('edit_level').innerHTML = str1;
                             // console.log('size trong list == ',size)
                         }
                     })
-                    let str2 = '';
-                    $.ajax({
-                        async: false,
-                        //do AJAX là bất động bộ nên phải thêm async: false để chuyển về đồng bộ
-                        url: 'http://localhost:8080/types',
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function (data) {
-                            for (let i = 0; i < data.length; i++) {
-                                if (data[i].type == question.type.type) {
-                                    str1 += '<option selected="selected" value="' + data[i].id + '">' + data[i].type + '</option>';
-                                }
-                                str2 += '<option value="' + data[i].id + '">' + data[i].type + '</option>';
-                            }
-                            document.getElementById('edit_type').innerHTML = str2;
-                        }
-                    })
-                    $.ajax({
-                        async: false,
-                        //do AJAX là bất động bộ nên phải thêm async: false để chuyển về đồng bộ
-                        url: 'http://localhost:8080/questions/' + editid + '/answers',
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function (answer) {
-                            // console.log(question.type.id)
-                            if (question.type.id == 1) {
-                                for (let i = 0; i < answer.length; i++) {
-                                    // console.log("answeris" + answer[i].id)
-                                    str +=
-                                        `
-                        <input class="form-check-input" type="radio" name="answer" id="${answer[i].id}" value="${answer[i].id}">
-                        <label class="form-check-label">
-                            ${answer[i].content}
-                        </label><br><br>
-                    `
-                                }
-                                document.getElementById('show_edit_answer').innerHTML = str;
-                            }
-                            if (question.type.id == 2) {
-                                for (let i = 0; i < answer.length; i++) {
-                                    // console.log("answeris"+answer[i].id)
-                                    str +=
-                                        `
-                        <input class="form-check-input" type="checkbox" name="answer" id="${answer[i].id}" value="${answer[i].id}">
-                        <label class="form-check-label">
-                            ${answer[i].content}
-                        </label><br><br>
-                    `
-                                }
-                                document.getElementById('show_edit_answer').innerHTML = str;
-                            }
-                            // console.log('size trong list == ',size)
-                        }
-                    })
-
+                    // let str2 = '';
+                    // $.ajax({
+                    //     async: false,
+                    //     //do AJAX là bất động bộ nên phải thêm async: false để chuyển về đồng bộ
+                    //     url: 'http://localhost:8080/types',
+                    //     method: 'GET',
+                    //     dataType: 'json',
+                    //     success: function (data) {
+                    //         for (let i = 0; i < data.length; i++) {
+                    //             if (data[i].type == question.type.type) {
+                    //                 str2 += '<option selected="selected" value="' + data[i].id + '">' + data[i].type + '</option>';
+                    //             }else {
+                    //                 str2 += '<option value="' + data[i].id + '">' + data[i].type + '</option>';
+                    //             }
+                    //         }
+                    //         document.getElementById('edit_type').innerHTML = str2;
+                    //     }
+                    // })
+                    // str5 += '<input type="submit" className="btn btn-success" onclick="editQuestion(' + localStorage.getItem("editid") + ');editAnswerForm(' + localStorage.getItem("editid") + ')" value="Edit Answer">'
                     str5 += '<input type="submit" className="btn btn-success" onclick="editQuestion(' + localStorage.getItem("editid") + ')" value="Update Question">'
 
                     document.getElementById('btn_editquestion').innerHTML = str5;
                 }
             })
         }
+
+        // function editAnswerForm(editid) {
+        //     $.ajax({
+        //         async: false,
+        //         //do AJAX là bất động bộ nên phải thêm async: false để chuyển về đồng bộ
+        //         url: 'http://localhost:8080/questions/'+editid,
+        //         method: 'GET',
+        //         dataType: 'json',
+        //         success: function (question) {
+        //             let str = '';
+        //             let str5 = '';
+        //             $.ajax({
+        //                 async: false,
+        //                 //do AJAX là bất động bộ nên phải thêm async: false để chuyển về đồng bộ
+        //                 url: 'http://localhost:8080/questions/' + editid + '/answers',
+        //                 method: 'GET',
+        //                 dataType: 'json',
+        //                 success: function (answer) {
+        //                     // console.log(question.type.id)
+        //                     if (question.type.id == 1) {
+        //                         for (let i = 0; i < answer.length; i++) {
+        //                             if(answer[i].status==true){
+        //                                 str +=
+        //                                     `
+        //                 <input class="form-check-input" type="radio" name="answer" id="ans${answer[i].id}" value="${answer[i].id}">
+        //                 <label class="form-check-label">
+        //                     ${answer[i].content}
+        //                 </label><br><br>
+        //             `
+        //                             }else {
+        //                                 str +=
+        //                                     `
+        //                 <input class="form-check-input" type="radio" name="answer" id="ans${answer[i].id}" value="${answer[i].id}">
+        //                 <label class="form-check-label">
+        //                     ${answer[i].content}
+        //                 </label><br><br>
+        //             `
+        //                             }
+        //                             // console.log("answeris" + answer[i].id)
+        //
+        //                         }
+        //                         document.getElementById('show_edit_answer').innerHTML = str;
+        //                     }
+        //                     if (question.type.id == 2) {
+        //                         for (let i = 0; i < answer.length; i++) {
+        //                             if(answer[i].status==true){
+        //                                 str +=
+        //                                     `
+        //                 <input class="form-check-input" type="checkbox" name="answer" id="ans${answer[i].id}" value="${answer[i].id}">
+        //                 <label class="form-check-label">
+        //                     ${answer[i].content}
+        //                 </label><br><br>
+        //             `
+        //                             }else {
+        //                                 str +=
+        //                                     `
+        //                 <input class="form-check-input" type="checkbox" name="answer" id="ans${answer[i].id}" value="${answer[i].id}">
+        //                 <label class="form-check-label">
+        //                     ${answer[i].content}
+        //                 </label><br><br>
+        //             `
+        //                             }
+        //                             // console.log("answeris"+answer[i].id)
+        //
+        //                         }
+        //                         document.getElementById('show_edit_answer').innerHTML = str;
+        //                     }
+        //                     // console.log('size trong list == ',size)
+        //                 }
+        //             })
+        //
+        //             // str5 += '<input type="submit" className="btn btn-success" onclick="editAnswer(' + localStorage.getItem("editid") + ')" value="Edit Answer">'
+        //             str5 += '<input type="submit" className="btn btn-success" onclick="editAnswer(' + localStorage.getItem("editid") + ')" value="Update Question">'
+        //
+        //             document.getElementById('btn_editquestion').innerHTML = str5;
+        //         }
+        //     })
+        // }
         function editQuestion(editid) {
             let content = document.getElementById('edit_ques_content').value;
             let category_id = document.getElementById('edit_category').value;
@@ -973,25 +1066,6 @@
     </div>
 </div>
 
-<!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--    <div class="modal-dialog">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>-->
-<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                    <span aria-hidden="true">&times;</span>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                ...-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" rel="stylesheet"/>
 </html>

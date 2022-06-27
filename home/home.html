@@ -472,11 +472,66 @@
                     $.each(pageItems, function (index, item) {
                         dataHtml +=
                             '<tr>' +
-                            '<td class="table-light">' + '<p>' + item.name + '</p>' + '</td>' +
+                            '<td class="table-light">' + '<p onclick="listResult();pageResult('+item.id+')">' + item.name + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.user.name + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.level.level + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.date + '</p>' + '</td>' +
                             '<td ><a class="btn btn-primary" onclick="findQuestionByTest(' + item.id + ')">Do Quizz</a> </td>' +
+                            '</tr>'
+                    })
+                    dataHtml += '</table>';
+                    container.prev().html(dataHtml);
+                }
+            })
+        })
+    }
+
+    function listResult() {
+        $.ajax({
+            async: false,
+            url: 'http://localhost:8080/results',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // console.log("date", data)
+                size = data.length;
+                // console.log('size trong list == ',size)
+            }
+        })
+    }
+
+    function pageResult(testid) {
+        console.log("id bai test ========"+testid)
+        $(function () {
+            let container = $('#demo');
+            container.pagination({
+                dataSource: 'http://localhost:8080/tests/'+testid+'/results',
+                locator: 'items',
+                totalNumber: size,
+                pageSize: 5,
+                callback: function (response, pagination) {
+                    console.log("response", response)
+                    console.log("pagination", pagination)
+                    let dataHtml = '<table border="1" class="table">'
+                    dataHtml +=
+                        '<tr class="table-success">' +
+                        '<th >Name</th>' +
+                        '<th >User</th>' +
+                        '<th>Mark</th>' +
+                        '<th>Date</th>' +
+                        '</tr>'
+                    let pageStart = (pagination.pageNumber - 1) * pagination.pageSize;
+                    let pageEnd = pageStart + pagination.pageSize;
+                    let pageItems = response.slice(pageStart, pageEnd);
+                    $.each(pageItems, function (index, item) {
+                        console.log("pageItems",pageItems)
+                        dataHtml +=
+                            '<tr>' +
+                            '<td class="table-light">' + '<p>' + item.test.name + '</p>' + '</td>' +
+                            '<td class="table-light">' + '<p>' + item.user.name + '</p>' + '</td>' +
+                            '<td class="table-light">' + '<p>' + item.mark + '</p>' + '</td>' +
+                            '<td class="table-light">' + '<p>' + item.date + '</p>' + '</td>' +
+                            // '<td ><a class="btn btn-primary" onclick="findQuestionByTest(' + item.id + ')">Do Quizz</a> </td>' +
                             '</tr>'
                     })
                     dataHtml += '</table>';
