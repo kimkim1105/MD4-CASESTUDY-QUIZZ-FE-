@@ -480,7 +480,7 @@
                             '<td class="table-light">' + '<p>' + item.level.level + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.date + '</p>' + '</td>'
                         if (window.sessionStorage.getItem('TOKEN_KEY') !== null) {
-                            dataHtml +='<td id="btn-doQuizz"><a class="btn btn-primary" onclick="findQuestionByTest(' + item.id + ')">Do Quizz</a> </td>'
+                            dataHtml +='<td id="btn-doQuizz"><a class="btn btn-primary" onclick="findQuestionByTest(' + item.id + '); countDown()">Do Quizz</a> </td>'
                         }
                         dataHtml += '</tr>'
                     })
@@ -672,6 +672,9 @@
                         <div class="col-sm-6">
                             <h2>Quizz</h2>
                         </div>
+                        <div class="col-sm-6" style="display: inline-block">
+                            <h2 id="timeout" style="float: right;"></h2>
+                        </div>
                     </div>
                 </div>
                 <table class="table table-striped table-hover">
@@ -723,6 +726,20 @@
                 document.getElementById("display").innerHTML = show;
             }
         });
+    }
+
+    count=7;
+    let endTime;
+    function countDown() {
+        count--;
+        endTime= setTimeout(countDown,1000);
+        console.log(count);
+        document.getElementById('timeout').innerHTML=count;
+        if (count<= 0){
+            clearTimeout(endTime)
+            // alert("Hết giờ rồi BRO!!!")
+            submitTest();
+        }
     }
 
 
