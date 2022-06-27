@@ -892,7 +892,7 @@
 <body>
 <header>
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
-        <a class="navbar-brand" href="../home/home.html"><strong>QUIZZ</strong></a>
+        <a class="navbar-brand" href="home.html"><strong>QUIZZ</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -900,13 +900,20 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="../home/home.html">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="../home/home.html">Home<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../user/login.html">Login</a>
+                <li class="nav-item active" id="loginUser">
+                    <a id="login" class="nav-link" href="../user/login.html">Login</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../user/register.html">Register</a>
+                <li class="nav-item active" id="registerUser">
+                    <a id="register" class="nav-link" href="../user/register.html">Register</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" id="user" href="../user/user-acount.html"><span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" id="user1" href="../user/adminmanager.html"><span
+                            class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>
@@ -1039,12 +1046,12 @@
                             <option id="edit_level_id" value="0">Choose Level</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Type</label>
-                        <select name="" id="edit_type">
-                            <option id="edit_type_id" value="0">Choose Type</option>
-                        </select>
-                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <label>Type</label>-->
+<!--                        <select name="" id="edit_type">-->
+<!--                            <option id="edit_type_id" value="0">Choose Type</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
 
 
                 </div>
@@ -1065,7 +1072,41 @@
         </div>
     </div>
 </div>
+<script>
+    console.log('token-->', window.sessionStorage.getItem('TOKEN_KEY'))
+    console.log('name-->', window.sessionStorage.getItem('NAME_KEY'))
 
+    function logOut() {
+        window.sessionStorage.clear();
+        window.location.href = '../home/home.html';
+    }
+
+
+    if (window.sessionStorage.getItem('TOKEN_KEY') == null) {
+        document.getElementById('user1').innerHTML = '';
+        document.getElementById('user').innerHTML = '';
+        $("#btn-addTest").hide();
+    }
+
+    if (window.sessionStorage.getItem('TOKEN_KEY') !== null) {
+        document.getElementById("registerUser").innerHTML = '<a class="nav-link" id="logout" onclick="logOut()" href="../home/home.html">Log Out<span class="sr-only">(current)</span></a>\n';
+        document.getElementById("login").innerHTML = '';
+
+        if (window.sessionStorage.getItem('ROLE_KEY') == '[{"authority":"ROLE_ADMIN"}]') {
+            let name = window.sessionStorage.getItem('NAME_KEY');
+            document.getElementById('user').innerHTML = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1);
+            document.getElementById("loginUser").innerHTML = '<a class="nav-link" id="user1" href="../user/adminmanager.html"><span class="sr-only">(current)</span></a>\n';
+            document.getElementById('user1').innerHTML = "User Management";
+            // document.getElementById('user1').innerHTML = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1);
+        } else {
+            let name1 = window.sessionStorage.getItem('NAME_KEY');
+            document.getElementById('user1').innerHTML = '';
+            document.getElementById("loginUser").innerHTML = '<a class="nav-link" id="user" href="../user/user-acount.html"><span class="sr-only">(current)</span></a>\n';
+            document.getElementById('user').innerHTML = "Profile's " + name1.charAt(0).toUpperCase() + name1.slice(1);
+        }
+    }
+
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css" rel="stylesheet"/>
 </html>

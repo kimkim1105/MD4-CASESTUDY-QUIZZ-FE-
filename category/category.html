@@ -3,21 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
-            integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
-            crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+    <title>Question Management</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -28,7 +14,8 @@
     <style>
         body {
             color: #566787;
-            background: #f5f5f5;
+            /*background: #f5f5f5;*/
+            background-color: #17a2b8;
             font-family: 'Varela Round', sans-serif;
             font-size: 13px;
         }
@@ -94,7 +81,7 @@
         }
 
         table.table tr th:first-child {
-            width: 60px;
+            width: 150px;
         }
 
         table.table tr th:last-child {
@@ -301,7 +288,36 @@
 
 </head>
 <body>
-<div class="container-xl">
+<header>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+        <a class="navbar-brand" href="home.html"><strong>QUIZZ</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="../home/home.html">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active" id="loginUser">
+                    <a id="login" class="nav-link" href="../user/login.html">Login</a>
+                </li>
+                <li class="nav-item active" id="registerUser">
+                    <a id="register" class="nav-link" href="../user/register.html">Register</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" id="user" href="../user/user-acount.html"><span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" id="user1" href="../user/adminmanager.html"><span
+                            class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div style="margin-top: 100px!important;" class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">
             <div class="table-title">
@@ -313,7 +329,6 @@
                     <div class="col-sm-6">
                         <a href="#addQuestionModal" onclick="createQuestionForm()" class="btn btn-success"
                            data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add Category</span></a>
-                        <a href="../home/home.html" class="btn btn-danger">Back Home</a>
                     </div>
                     <div>
                     </div>
@@ -471,5 +486,40 @@
     //     roles='user';
     // }
     // document.getElementById('user-accounts2').innerHTML='Admin:' +" "+name;
+</script>
+<script>
+    console.log('token-->', window.sessionStorage.getItem('TOKEN_KEY'))
+    console.log('name-->', window.sessionStorage.getItem('NAME_KEY'))
+
+    function logOut() {
+        window.sessionStorage.clear();
+        window.location.href = '../home/home.html';
+    }
+
+
+    if (window.sessionStorage.getItem('TOKEN_KEY') == null) {
+        document.getElementById('user1').innerHTML = '';
+        document.getElementById('user').innerHTML = '';
+        $("#btn-addTest").hide();
+    }
+
+    if (window.sessionStorage.getItem('TOKEN_KEY') !== null) {
+        document.getElementById("registerUser").innerHTML = '<a class="nav-link" id="logout" onclick="logOut()" href="../home/home.html">Log Out<span class="sr-only">(current)</span></a>\n';
+        document.getElementById("login").innerHTML = '';
+
+        if (window.sessionStorage.getItem('ROLE_KEY') == '[{"authority":"ROLE_ADMIN"}]') {
+            let name = window.sessionStorage.getItem('NAME_KEY');
+            document.getElementById('user').innerHTML = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1);
+            document.getElementById("loginUser").innerHTML = '<a class="nav-link" id="user1" href="../user/adminmanager.html"><span class="sr-only">(current)</span></a>\n';
+            document.getElementById('user1').innerHTML = "User Management";
+            // document.getElementById('user1').innerHTML = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1);
+        } else {
+            let name1 = window.sessionStorage.getItem('NAME_KEY');
+            document.getElementById('user1').innerHTML = '';
+            document.getElementById("loginUser").innerHTML = '<a class="nav-link" id="user" href="../user/user-acount.html"><span class="sr-only">(current)</span></a>\n';
+            document.getElementById('user').innerHTML = "Profile's " + name1.charAt(0).toUpperCase() + name1.slice(1);
+        }
+    }
+
 </script>
 </html>
