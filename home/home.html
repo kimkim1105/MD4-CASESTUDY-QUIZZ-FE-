@@ -334,11 +334,10 @@
                 <li class="nav-item active">
                     <a class="nav-link" id="user" href="../user/user-acount.html"><span class="sr-only">(current)</span></a>
                 </li>
-                <li>
+                <li class="nav-item active">
                     <a class="nav-link" id="user1" href="../user/adminmanager.html"><span
                             class="sr-only">(current)</span></a>
                 </li>
-
             </ul>
         </div>
     </nav>
@@ -352,7 +351,7 @@
                         <div class="col-sm-6">
                             <h2>Test List</h2>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" id="btn-addTest">
                             <a onclick="createTestForm()" href="#addTestModal" class="btn btn-success"
                                data-toggle="modal"><i
                                     class="material-icons">&#xE147;</i> <span>Add Test</span></a>
@@ -463,9 +462,12 @@
                         '<th >Name</th>' +
                         '<th >User</th>' +
                         '<th>Level</th>' +
-                        '<th>Date</th>' +
-                        '<th>Action</th>' +
-                        '</tr>'
+                        '<th>Date</th>'
+
+                    if (window.sessionStorage.getItem('TOKEN_KEY') !== null) {
+                        dataHtml += '<th id="action">Action</th>'
+                    }
+                    dataHtml += '</tr>'
                     let pageStart = (pagination.pageNumber - 1) * pagination.pageSize;
                     let pageEnd = pageStart + pagination.pageSize;
                     let pageItems = response.slice(pageStart, pageEnd);
@@ -475,9 +477,11 @@
                             '<td class="table-light">' + '<p onclick="listResult();pageResult('+item.id+')">' + item.name + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.user.name + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.level.level + '</p>' + '</td>' +
-                            '<td class="table-light">' + '<p>' + item.date + '</p>' + '</td>' +
-                            '<td ><a class="btn btn-primary" onclick="findQuestionByTest(' + item.id + ')">Do Quizz</a> </td>' +
-                            '</tr>'
+                            '<td class="table-light">' + '<p>' + item.date + '</p>' + '</td>'
+                        if (window.sessionStorage.getItem('TOKEN_KEY') !== null) {
+                            dataHtml +='<td id="btn-doQuizz"><a class="btn btn-primary" onclick="findQuestionByTest(' + item.id + '); countDown()">Do Quizz</a> </td>'
+                        }
+                        dataHtml += '</tr>'
                     })
                     dataHtml += '</table>';
                     container.prev().html(dataHtml);
@@ -585,8 +589,7 @@
                         id: currentTest
                     },
                     user: {
-                        // id: window.sessionStorage.getItem("TOKEN_ID")
-                        id: 1
+                        id: window.sessionStorage.getItem("TOKEN_ID")
                     },
                     mark: 0,
                     answers: answerss
@@ -620,8 +623,6 @@
     }
 
     function currentResult(resultId) {
-        // compareAnswer(resultId)
-        // console.log("bat id vao laf id naof"+resultId)
         let str = '';
         $.ajax({
             async: false,
@@ -762,8 +763,9 @@
 
     function findQuestionByTest(id) {
         let show = '';
-        // console.log("testid", id)
+        console.log("testid", id)
         currentTest = id;
+        localStorage.setItem('idddd', id);
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/tests/" + id + "/questions",
@@ -777,6 +779,9 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <h2>Quizz</h2>
+                        </div>
+                        <div class="col-sm-6" style="display: inline-block">
+                            <h2 id="timeout" style="float: right;"></h2>
                         </div>
                     </div>
                 </div>
@@ -808,19 +813,6 @@
                                 type = "checkbox";
                             }
                             for (let i = 0; i < answer.length; i++) {
-                                //     if(answer[i].status==true){
-                                //         str += `<input class="form-check-input" type=${type} name="${name}" id="${answer[i].id}" value="${answer[i].id}">
-                                // <label class="form-check-label" style="color: green">
-                                //     ${answer[i].content}
-                                // </label></br>`
-                                //     }else {
-                                //         str += `<input class="form-check-input" type=${type} name="${name}" id="${answer[i].id}" value="${answer[i].id}">
-                                // <label class="form-check-label">
-                                //     ${answer[i].content}
-                                // </label></br>`
-                                //     }
-
-
                                 str += `<input class="form-check-input" type=${type} name="${name}" id="${answer[i].id}" value="${answer[i].id}">
                             <label class="form-check-label">
                                 ${answer[i].content}
@@ -842,6 +834,20 @@
                 document.getElementById("display").innerHTML = show;
             }
         });
+    }
+
+    count=7;
+    let endTime;
+    function countDown() {
+        count--;
+        endTime= setTimeout(countDown,1000);
+        console.log(count);
+        document.getElementById('timeout').innerHTML=count;
+        if (count<= 0){
+            clearTimeout(endTime)
+            // alert("Hết giờ rồi BRO!!!")
+            submitTest();
+        }
     }
 
 
@@ -988,26 +994,28 @@
         window.location.href = '../home/home.html';
     }
 
+
     if (window.sessionStorage.getItem('TOKEN_KEY') == null) {
         document.getElementById('user1').innerHTML = '';
         document.getElementById('user').innerHTML = '';
+        $("#btn-addTest").hide();
     }
 
     if (window.sessionStorage.getItem('TOKEN_KEY') !== null) {
         document.getElementById("registerUser").innerHTML = '<a class="nav-link" id="logout" onclick="logOut()" href="../home/home.html">Log Out<span class="sr-only">(current)</span></a>\n';
         document.getElementById("login").innerHTML = '';
 
-        if (window.sessionStorage.getItem('ROLE_KEY') == '[{"authority":"ADMIN"}]') {
-            document.getElementById('user').innerHTML = '';
+        if (window.sessionStorage.getItem('ROLE_KEY') == '[{"authority":"ROLE_ADMIN"}]') {
             let name = window.sessionStorage.getItem('NAME_KEY');
-            let a = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1);
+            document.getElementById('user').innerHTML = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1);
             document.getElementById("loginUser").innerHTML = '<a class="nav-link" id="user1" href="../user/adminmanager.html"><span class="sr-only">(current)</span></a>\n';
-            document.getElementById('user1').innerHTML = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1);
+            document.getElementById('user1').innerHTML = "User Management";
+            // document.getElementById('user1').innerHTML = "Profile's " + name.charAt(0).toUpperCase() + name.slice(1);
         } else {
             let name1 = window.sessionStorage.getItem('NAME_KEY');
             document.getElementById('user1').innerHTML = '';
             document.getElementById("loginUser").innerHTML = '<a class="nav-link" id="user" href="../user/user-acount.html"><span class="sr-only">(current)</span></a>\n';
-            document.getElementById('user').innerHTML = "Profile's " + name1.charAt(0).toUpperCase() + name1.slice(1);// 'User:' + " " + name1
+            document.getElementById('user').innerHTML = "Profile's " + name1.charAt(0).toUpperCase() + name1.slice(1);
         }
     }
 
