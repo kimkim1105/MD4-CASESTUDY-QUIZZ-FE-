@@ -122,6 +122,7 @@
             let signUpFormOBJ = JSON.stringify(signUpForm);
             console.log('signUpFormOBJ === ',signUpFormOBJ)
             $.ajax({
+                // url: 'https://md4-buihaibinh.herokuapp.com/signup',
                 url:'http://localhost:8080/api/auth/signup',
                 method: 'POST',
                 data: signUpFormOBJ,
