@@ -335,7 +335,8 @@
                     <a class="nav-link" id="user" href="../user/user-acount.html"><span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" id="user1" href="../user/adminmanager.html"><span class="sr-only">(current)</span></a>
+                    <a class="nav-link" id="user1" href="../user/adminmanager.html"><span
+                            class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>
@@ -350,9 +351,9 @@
                         <div class="col-sm-6">
                             <h2>Test List</h2>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" id="btn-addTest">
                             <a onclick="createTestForm()" href="#addTestModal" class="btn btn-success"
-                               data-toggle="modal"><i>
+                               data-toggle="modal"><i
                                     class="material-icons">&#xE147;</i> <span>Add Test</span></a>
                         </div>
                     </div>
@@ -446,6 +447,7 @@
 
     //PAGINATION
     function pageTest() {
+
         $(function () {
             let container = $('#demo');
             container.pagination({
@@ -461,9 +463,12 @@
                         '<th >Name</th>' +
                         '<th >User</th>' +
                         '<th>Level</th>' +
-                        '<th>Date</th>' +
-                        '<th>Action</th>' +
-                        '</tr>'
+                        '<th>Date</th>'
+
+                    if (window.sessionStorage.getItem('TOKEN_KEY') !== null) {
+                        dataHtml += '<th id="action">Action</th>'
+                    }
+                    dataHtml += '</tr>'
                     let pageStart = (pagination.pageNumber - 1) * pagination.pageSize;
                     let pageEnd = pageStart + pagination.pageSize;
                     let pageItems = response.slice(pageStart, pageEnd);
@@ -473,9 +478,11 @@
                             '<td class="table-light">' + '<p>' + item.name + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.user.name + '</p>' + '</td>' +
                             '<td class="table-light">' + '<p>' + item.level.level + '</p>' + '</td>' +
-                            '<td class="table-light">' + '<p>' + item.date + '</p>' + '</td>' +
-                            '<td ><a class="btn btn-primary" onclick="findQuestionByTest(' + item.id + ')">Do Quizz</a> </td>' +
-                            '</tr>'
+                            '<td class="table-light">' + '<p>' + item.date + '</p>' + '</td>'
+                        if (window.sessionStorage.getItem('TOKEN_KEY') !== null) {
+                            dataHtml +='<td id="btn-doQuizz"><a class="btn btn-primary" onclick="findQuestionByTest(' + item.id + ')">Do Quizz</a> </td>'
+                        }
+                        dataHtml += '</tr>'
                     })
                     dataHtml += '</table>';
                     container.prev().html(dataHtml);
@@ -551,12 +558,13 @@
                         // compareAnswer(data.test.id,data.id);
                         // window.localStorage.setItem("currentresult",data.id);
                         // console.log(" co tao duoc result moi k" + data)
-                    currentResult(data.id);
+                        currentResult(data.id);
                     }
                 })
             }
         })
     }
+
     function currentResult(resultId) {
         let str = '';
         $.ajax({
@@ -607,8 +615,8 @@
                     let type = "";
                     show +=
                         '<tr>' +
-                        '<h6 style="margin: 10px 0px">Question'+(i+1)+': '+question[i].content+'</h6>' +
-                        '<div class="form-check" style="margin-left: 10px" id="show'+question[i].id+'">'
+                        '<h6 style="margin: 10px 0px">Question' + (i + 1) + ': ' + question[i].content + '</h6>' +
+                        '<div class="form-check" style="margin-left: 10px" id="show' + question[i].id + '">'
                     let name = i + "";
                     $.ajax({
                         type: "GET",
@@ -647,8 +655,9 @@
 
     function findQuestionByTest(id) {
         let show = '';
-        // console.log("testid", id)
+        console.log("testid", id)
         currentTest = id;
+        localStorage.setItem('idddd', id);
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/tests/" + id + "/questions",
@@ -860,9 +869,11 @@
         window.location.href = '../home/home.html';
     }
 
+
     if (window.sessionStorage.getItem('TOKEN_KEY') == null) {
         document.getElementById('user1').innerHTML = '';
         document.getElementById('user').innerHTML = '';
+        $("#btn-addTest").hide();
     }
 
     if (window.sessionStorage.getItem('TOKEN_KEY') !== null) {
@@ -879,7 +890,7 @@
             let name1 = window.sessionStorage.getItem('NAME_KEY');
             document.getElementById('user1').innerHTML = '';
             document.getElementById("loginUser").innerHTML = '<a class="nav-link" id="user" href="../user/user-acount.html"><span class="sr-only">(current)</span></a>\n';
-            document.getElementById('user').innerHTML = "Profile's " + name1.charAt(0).toUpperCase() + name1.slice(1);// 'User:' + " " + name1
+            document.getElementById('user').innerHTML = "Profile's " + name1.charAt(0).toUpperCase() + name1.slice(1);
         }
     }
 
