@@ -575,11 +575,25 @@
             })
         }
 
+        // deleteQuestion
+        function deleteQuestion(id){
+                $.ajax({
+                    type: "DELETE",
+                    url: "http://localhost:8080/questions/" + id,
+                    success: function () {
+                        pageQuestion();
+
+                    },
+                    error: function (error) {
+                        alert("question has exist in any test")
+                    }
+                })
+            }
+
         //PAGINATION
         function pageQuestion() {
 
             $(function () {
-                // console.log('size trong pagination ==',size)
                 let container = $('#demo');
                 container.pagination({
                     dataSource: 'http://localhost:8080/questions',
@@ -609,7 +623,7 @@
                                 '<td class="table-light">' + '<p>' + item.level.level + '</p>' + '</td>' +
                                 '<td class="table-light">' + '<p>' + item.type.type + '</p>' + '</td>' +
                                 '<td><a href="#editQuestionModal" class="btn btn-primary">Edit</a></td>' +
-                                '<td><a href="#deleteQuestionModal"><button class="btn btn-danger">Delete</button></a></td>' +
+                                '<td><button onclick="deleteQuestion('+item.id+')" class="btn btn-danger">Delete</button></td>' +
                                 '</tr>'
 
                         })
@@ -761,7 +775,7 @@
         <div class="modal-content">
             <form>
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete Employee</h4>
+                    <h4 class="modal-title">Delete Question</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
