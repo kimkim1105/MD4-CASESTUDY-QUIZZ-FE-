@@ -357,8 +357,7 @@
                             <a href="../question/question_management.html" class="btn btn-success"
                             ><span>Question Management</span></a>
                             <a onclick="createTestForm()" href="#addTestModal" class="btn btn-success"
-                               data-toggle="modal"><i
-                                    class="material-icons">&#xE147;</i> <span>Add Test</span></a>
+                               data-toggle="modal"><span>Add Test</span></a>
                         </div>
                     </div>
                 </div>
@@ -617,7 +616,6 @@
                         // console.log(" co tao duoc result moi k" + data.id);
                         // console.log(" testid vaf result id truyen vaof" + data.test.id + "========" + data.id)
 
-
                         compareAnswer(data.id);
                         // currentResult(data.id);
                     }
@@ -752,7 +750,7 @@
                     `
                             ;
                         }
-                        show += `</tbody> <button onclick="submitTest()" type="button" class="btn btn-primary" style="margin-top: 20px;">Submit</button>
+                        show += `</tbody> <a href="../home/home.html" type="button" class="btn btn-primary" style="margin-top: 20px;" id="btnSubmit">Back</a>
                         </table>
             </div>
         </div>
@@ -840,7 +838,7 @@
         });
     }
 
-    count=7;
+    count=30;
     let endTime;
     function countDown() {
         count--;
@@ -966,8 +964,8 @@
                 id: level
             },
             user: {
-                // id: window.sessionStorage.getItem("TOKEN_ID")
-                id: 1
+                id: window.sessionStorage.getItem("TOKEN_ID")
+                // id: 1
             },
             questions: listQuestionAddToTest
         }
