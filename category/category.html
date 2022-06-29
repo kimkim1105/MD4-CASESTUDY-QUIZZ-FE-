@@ -368,6 +368,32 @@
         </div>
     </div>
 </div>
+
+<!-- Delete Modal HTML -->
+<div id="deleteCategoryModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header" id="delete_notice_c">
+                    <h4 class="modal-title">Delete Question</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div id="dwec">
+                    <div class="modal-body">
+                        <input type="text" required hidden>
+                        <p>Are you sure you want to delete these Records?</p>
+                        <p class="text-warning"><small>This action cannot be undone.</small></p>
+                    </div>
+                </div>
+                <div class="modal-footer" id="btn-delete-cate">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <!--                    <input type="submit" class="btn btn-danger" value="Delete">-->
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
 <!--Pagination-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
@@ -410,11 +436,22 @@
             type: "DELETE",
             url: "http://localhost:8080/categories/" + id,
             success: function () {
+                // let str0 = ``
+                // str0 += `<input type="button" class="btn btn-default" data-dismiss="modal" value="Ok">`
+                // document.getElementById("btn-delete-cate").innerHTML = str0;
+                // document.getElementById("dwec").innerHTML = "Delete Success";
                 pageUser()
 
             },
             error: function (error) {
                 alert("category has been existed in any question")
+                // $('#dwec').hide()
+                // let str =  "category has exist in any question"
+                // document.getElementById("delete_notice_c").innerHTML = str;
+                // let str2 = '';
+                // str2 += '<input type="button" class="btn btn-default" data-dismiss="modal" value="Ok">'
+                // // console.log(localStorage.getItem("deleteid"))
+                // document.getElementById('btn-delete-cate').innerHTML = str2;
             }
         })
     }
@@ -458,7 +495,7 @@
                     $.each(pageItems, function (index, user) {
                         dataHtml +=
                             `<tr>
-                                    <td>${user.id}</td>
+                                    <td>${index+1}</td>
                                     <td>${user.name}</td>
                                     <td><button class="btn btn-danger" onclick="deleteCategory(${user.id})">Delete</button></td>
                                     </tr>`;

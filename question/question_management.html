@@ -626,14 +626,27 @@
 
         // deleteQuestion
         function deleteQuestion(id){
+            console.log("delete id ======="+id)
                 $.ajax({
                     type: "DELETE",
                     url: "http://localhost:8080/questions/" + id,
                     success: function () {
+                        let str0 = ``
+                        str0 += `<input type="button" class="btn btn-default" data-dismiss="modal" value="Ok">`
+                        document.getElementById("btn-delete-ques").innerHTML = str0;
+                        document.getElementById("dwe").innerHTML = "Delete Success";
                         pageQuestion();
                     },
                     error: function (error) {
-                        alert("question has exist in any test")
+
+                        $('#dwe').hide()
+                        let str =  "question has exist in any test"
+                        // alert("question has exist in any test")
+                        document.getElementById("delete_notice").innerHTML = str;
+                        let str2 = '';
+                        str2 += '<input type="button" class="btn btn-default" data-dismiss="modal" value="Ok">'
+                        // console.log(localStorage.getItem("deleteid"))
+                        document.getElementById('btn-delete-ques').innerHTML = str2;
                     }
                 })
             }
@@ -642,6 +655,7 @@
                 $("#deleteQuestionModal").modal("show");
                 let str = '';
                str += '<input type="submit" className="btn btn-danger" onclick="deleteQuestion('+localStorage.getItem("deleteid")+')" value="Delete">'
+                // console.log(localStorage.getItem("deleteid"))
                 document.getElementById('btn-delete-ques').innerHTML = str;
             }
 
@@ -1003,18 +1017,22 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form>
-                <div class="modal-header">
+                <div class="modal-header" id="delete_notice">
                     <h4 class="modal-title">Delete Question</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
+                <div id="dwe">
                 <div class="modal-body">
+                    <input type="text" required hidden>
                     <p>Are you sure you want to delete these Records?</p>
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
                 </div>
                 <div class="modal-footer" id="btn-delete-ques">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
 <!--                    <input type="submit" class="btn btn-danger" value="Delete">-->
                 </div>
+
             </form>
         </div>
     </div>
